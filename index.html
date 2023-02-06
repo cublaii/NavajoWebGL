@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" antialias: false></canvas>
+      <canvas id="unity-canvas" width=844 height=390></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -17,6 +17,11 @@
         </div>
       </div>
       <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">AlfaRomeo FPK</div>
+      </div>
     </div>
     <script>
       var container = document.querySelector("#unity-container");
@@ -39,9 +44,9 @@
         var div = document.createElement('div');
         div.innerHTML = msg;
         warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 0px;';
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
         else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 0px;';
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
           setTimeout(function() {
             warningBanner.removeChild(div);
             updateBannerVisibility();
@@ -51,15 +56,16 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/navajoWebGL.loader.js";
+      var loaderUrl = buildUrl + "/230206_NavajoWebGL.loader.js";
       var config = {
-        dataUrl: buildUrl + "/navajoWebGL.data",
-        frameworkUrl: buildUrl + "/navajoWebGL.framework.js",
-        codeUrl: buildUrl + "/navajoWebGL.wasm",
+        dataUrl: buildUrl + "/230206_NavajoWebGL.data",
+        frameworkUrl: buildUrl + "/230206_NavajoWebGL.framework.js",
+        codeUrl: buildUrl + "/230206_NavajoWebGL.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "AlfaRomeo FPK",
         productVersion: "0.1.0",
+        showBanner: unityShowBanner,
       };
 
       // By default Unity keeps WebGL canvas render target size matched with
@@ -83,12 +89,12 @@
         // performance, uncomment the following line:
         // config.devicePixelRatio = 1;
 
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "100vw";
-        canvas.style.height = "auto";
-        config.devicePixelRatio=1.5;
+        canvas.style.width = "844px";
+        canvas.style.height = "390px";
       }
 
       loadingBar.style.display = "block";
@@ -100,18 +106,14 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
         }).catch((message) => {
           alert(message);
         });
       };
       document.body.appendChild(script);
-    </script>
-    <script>
-      document.addEventListener('wheel', onScroll, false);
-      document.addEventListener('mousemove', onMouse, false);
-      var content = document.getElementsByClassName('unity-desktop');
-      function onMouse() { content[0].style['pointer-events'] = 'auto'; }
-      function onScroll() { content[0].style['pointer-events'] = 'none'; }
     </script>
   </body>
 </html>
