@@ -3,21 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | AlfaRomeo FPK</title>
+    <title>AlfaRomeo FPK | Unity WebGL Player</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=100vw height=auto></canvas>
+      <canvas id="unity-canvas" width=844 height=390></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
           <div id="unity-progress-bar-full"></div>
         </div>
-      </div>
-      <div id="unity-warning"> </div>
-      <div id="unity-footer">
+
+
       </div>
     </div>
     <script>
@@ -62,7 +60,6 @@
         companyName: "DefaultCompany",
         productName: "AlfaRomeo FPK",
         productVersion: "0.1.0",
-        showBanner: unityShowBanner,
       };
 
       // By default Unity keeps WebGL canvas render target size matched with
@@ -90,8 +87,8 @@
       } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-        canvas.style.width = "844px";
-        canvas.style.height = "390px";
+        canvas.style.width = "100vw";
+        canvas.style.height = "auto";
       }
 
       loadingBar.style.display = "block";
@@ -103,9 +100,6 @@
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
         }).catch((message) => {
           alert(message);
         });
